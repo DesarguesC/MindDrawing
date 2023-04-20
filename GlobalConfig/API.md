@@ -14,7 +14,7 @@ response格式
 
 ## 用户user
 
-### 注册
+### **注册**
 
 ```bat
 [POST]
@@ -101,7 +101,7 @@ body:
 }
 ```
 
-### 登录
+### **登录**
 
 ```bat
 [POST]
@@ -145,7 +145,7 @@ body:
     data: {nil}
 }
 ```
-### 登出
+### **登出**
 ```bat
 [POST]
 {host} /users/logout
@@ -165,7 +165,7 @@ body:{}
 
 
 
-### 获取用户信息
+### **获取用户信息**
 
 获取完整信息
 ```bat
@@ -213,7 +213,7 @@ response
 
 
 
-### 修改密码(原密码)
+### **修改密码(原密码)**
 
 ```bat
 [POST]
@@ -251,7 +251,7 @@ body:
 ```
 
 
-### 修改密码（密保）
+### **修改密码（密保）**
 
 ```bat
 [POST]
@@ -260,7 +260,7 @@ body:
 body:
 {
     "N_E": "string"             // 输入用户名或邮箱
-    "SecA_now": "string"            // 密保问题答案     ->      这里先展示得到的密保问题(/user/account/get/secq)
+    "SecA_now": "string"        // 密保问题答案 -> 这里先展示得到的密保问题(/user/account/get/secq)
     "Pwd_new": "string"         // 新密码
 }
 ```
@@ -288,13 +288,188 @@ body:
 }
 ```
 
+## 绘本
+
+（文本和图片内容分别点击按键上传，分别response）
+
+### **输入描述文本**
+```bat
+[GET]
+{host} /picbook/text/input_text
+[param]
+body:
+{
+    "Text": "string"        // 前端实时统计输入文本字数（不超过300字）
+}
+```
+
+字数超限
+```bat
+[response]
+{
+    code: -301,
+    message: "输入不应超过300字",
+    data: {le(Text):int}
+}
+```
+有效输入
+```bat
+[response]
+{
+    code: 300,
+    message: "accepted text",       // 前端无需显示
+    data: {nil}
+}
+```
+
+
+
+### **上传描述文本文件**
+```bat
+[POST]
+{host} /picbook/text/input_file
+[param]
+body:
+{
+    "Text_file": "multipart.file"     // 不超过30KB
+}
+```
+
+文件大小超限
+```bat
+[response]
+{
+    code: -302,
+    message: "上传文本文件不应超过30KB",
+    data: {Text_file.size:int}
+}
+```
+有效输入
+```bat
+[response]
+{
+    code: 301,
+    message: "accepted text file",      // 前端无需显示
+    data: {nil}
+}
+```
+
+
+### **使用文本标签**
+（用勾选形式，勾选后进入该模式展示文本标签，前端返回一个0-1串？）
+
+```bat
+[POST]
+{host} /picbook/text/input_label
+[param]
+body:
+{
+    "Label_List": [] bool
+}
+```
+
+
+无选中的label
+```bat
+[response]
+{
+    code: -303,
+    message: "请选择需要的基础文本标签",        // 后端全零布尔数组输入
+    data: {nil}
+}
+```
+有效label选择
+```bat
+[response]
+{
+    code: 302,
+    message: "label accepted",      // 前端无需显示
+    data: {nil}
+}
+```
+
+
+
+### 注入风格的图片
+```bat
+[POST]
+{host} /picbook/image/style_img/upload
+[param]
+body:
+{
+    "Style_img": "image/png | image/jpeg"
+}
+```
+
+图片存储过大
+```bat
+[response]
+{
+    code: -304,
+    message: "图像文件不得超过20M",
+    data: {nil}
+}
+```
+图片尺寸过大
+```bat
+[response]
+{
+    code: -305,
+    message: "图像像素不得超过1024*1024",
+    data: {nil}
+}
+```
+有效Style上传
+```bat
+[response]
+{
+    code: 303,
+    message: "style accepted",      // 前端无需显示
+    data: {nil}
+}
+```
 
 
 
 
-
-
-
+### 手绘草图
+（可以的话在网页上直接开放用鼠标光标绘制草图，再做一个url）
+```bat
+[POST]
+{host} /picbook/image/sketch_img/upload
+[param]
+body:
+{
+    "Sketch_img": "image/png | image/jpeg"
+}
+```
+图片存储过大
+```bat
+[response]
+{
+    code: -304,
+    message: "图像文件不得超过20M",
+    data: {nil}
+}
+```
+图片尺寸过大
+```bat
+[response]
+{
+    code: -305,
+    message: "图像像素不得超过1024*1024",
+    data: {nil}
+}
+```
+有效Sketch上传
+```bat
+[response]
+{
+    code: 304,
+    message: "sketch accepted",      // 前端无需显示
+    data: {nil}
+}
+```
 
 
 
@@ -308,7 +483,11 @@ body:
 {
 
 }
+```
 
+
+
+```
 [response]
 {
 
