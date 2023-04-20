@@ -1,0 +1,21 @@
+# cache
+__pycharm__/
+
+
+
+
+
+# files
+*.pdf
+*.zip
+*.doxc
+*.json
+*.log
+*.csv
+
+
+# weights
+*.ckpt
+*.pth
+*.safetensors
+*.pt
