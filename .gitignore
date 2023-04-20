@@ -9,7 +9,7 @@ __pycharm__/
 *.pdf
 *.zip
 *.doxc
-[^{API}].json
+[^API].json
 *.log
 *.csv
 
