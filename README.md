@@ -1,1 +1,3 @@
 # MindDrawing
+
+Copyright MindDrawing Company
