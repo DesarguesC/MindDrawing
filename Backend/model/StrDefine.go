@@ -2,14 +2,12 @@ package model
 
 import (
 	"database/sql/driver"
-	"image"
 	"strings"
 )
 
 // 重写gorm Scanner/Valuer 接口
 
 type Strs []string
-type Imgs []image.Image
 
 func (m *Strs) Scan(val interface{}) error {
 	s := val.([]uint8)
