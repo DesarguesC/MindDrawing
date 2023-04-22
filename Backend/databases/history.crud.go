@@ -17,46 +17,28 @@ func Create_History(user *model.MD_User) (*model.History_Create, error) {
 }
 
 // QUERY
-func Query_History() {
-
+func Query_History(user_id int) (*model.History_Create, error) {
+	tmp := new(model.MD_User)
+	err := model.DB.Debug().Where("Id = ?", user_id).First(&tmp).Error
+	return &((*tmp).His_Cre), err
 }
 
 // UPDATE
 
 // Insert Path: Backend Path
 // all data got from Fronted have been saved as local file
-func UpdateTextPath(text_path string, create model.History_Create) (model.History_Create, error) {
-	var Str model.Strs
-	for i := 0; i <= len(create.Text_path); i++ {
-		if i != len(create.Text_path) {
-			Str[i] = create.Text_path[i]
-		} else {
-			Str[i] = text_path
-		}
-
+func UpdateTextPath(text_path string, create *model.History_Create) (*model.History_Create, error) {
+	if create != nil {
+		(*create).Text_path = append((*create).Text_path, text_path)
+	} else {
+		(*create).Text_path = model.Strs{text_path}
 	}
-	return model.History_Create{
-		User_Id:   create.User_Id,
-		Text_path: Str,
-		Img_path:  create.Img_path,
-	}, nil
+	return create, nil
 }
 
-func UpdateImagePath(image_path string, create model.History_Create) (model.History_Create, error) {
-	var Str model.Strs
-	for i := 0; i <= len(create.Img_path); i++ {
-		if i != len(create.Img_path) {
-			Str[i] = create.Text_path[i]
-		} else {
-			Str[i] = image_path
-		}
-
-	}
-	return model.History_Create{
-		User_Id:   create.User_Id,
-		Text_path: create.Text_path,
-		Img_path:  Str,
-	}, nil
+func UpdateImagePath(image_path string, create *model.History_Create) (*model.History_Create, error) {
+	(*create).Text_path = append((*create).Text_path, image_path)
+	return create, nil
 }
 
 // DELETE

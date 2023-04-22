@@ -9,9 +9,9 @@ import (
 
 // CREATE
 // dto user直接传入，用指针返回
-func CreateUser(user model.MD_User) error {
-	err := model.DB.Debug().Create(user).Error
-	return err
+func CreateUser(user *model.MD_User) (*model.MD_User, error) {
+	err := model.DB.Debug().Create(&user).Error
+	return user, err
 }
 
 // QUERY
@@ -41,8 +41,8 @@ func UpdateUser_Text(status string, text_path string) (*model.MD_User, error) {
 		return nil, err
 	}
 	hist = tmp.His_Cre
-	hist, err = UpdateTextPath(text_path, hist)
-	err = model.DB.Model(&tmp).Update("His_Cre", hist).Error
+	hist_, err := UpdateTextPath(text_path, &hist)
+	err = model.DB.Model(&tmp).Update("His_Cre", hist_).Error
 	// DB.Model(&tmp)  ->  select
 	return &tmp, err
 }
@@ -57,9 +57,8 @@ func UpdateUser_Image(status string, image_path string) (*model.MD_User, error) 
 		return nil, err
 	}
 	hist = tmp.His_Cre
-	hist, err = UpdateImagePath(image_path, hist)
-	tmp.His_Cre = hist
-	err = model.DB.Save(&tmp).Error
+	hist_, err := UpdateImagePath(image_path, &hist)
+	err = model.DB.Model(&tmp).Update("His_Cre", hist_).Error
 	return &tmp, err
 }
 
