@@ -9,6 +9,13 @@ type RegisterValid struct {
 	SecA        string `form:"seca" json:"seca" query:"seca" validate:"excludesall=!@#$%^&*()_-{}"`
 }
 
+type RegisterNameValid struct {
+	Name string `form:"name" json:"name" query:"name" validate:"excludesall=!@#$%^&*()_-{}"`
+}
+type RegisterEmailValid struct {
+	Email string `form:"email" json:"email" query:"email" validate:"contains=@[.]*.com"`
+}
+
 type LoginValid_E struct {
 	Email string `form:"email" json:"email" query:"email" validate:"contains=@[.*].com"`
 	Pwd   string `form:"pwd" json:"pwd" query:"pwd" validate:"excludesall=!@#$%^&*()_-{}"`
