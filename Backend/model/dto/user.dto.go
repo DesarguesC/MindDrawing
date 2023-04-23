@@ -1,14 +1,14 @@
 package dto
 
-type OriPwdInput struct {
-	// 用密保修改
+type SecPwdInput struct {
+	// 用输入密保答案修改
 	N_E     string `gorm:"type:varchar(20)" form:"n_e" json:"n_e"`
 	SecA    string `gorm:"type:varchar(100)" form:"seca" json:"seca"`
 	Pwd_new string `gorm:"type:varchar(100)" form:"pwd_new" json:"pwd_new"`
 }
 
-type SecPwdInput struct {
-	// 用原始密码修改
+type OriPwdInput struct {
+	// 用输入原始密码修改
 	N_E     string `gorm:"type:varchar(20)" form:"n_e" json:"n_e"`
 	Pwd_ori string `gorm:"type:varchar(100)" form:"pwd_ori" json:"pwd_ori"`
 	Pwd_new string `gorm:"type:varchar(100)" form:"pwd_new" json:"pwd_new"`

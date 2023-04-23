@@ -3,6 +3,7 @@ package app
 // add web routes
 
 import (
+	"Backend/app/controller"
 	"github.com/labstack/echo/v4"
 )
 
@@ -12,6 +13,13 @@ func ping(c echo.Context) error {
 
 func AddRoutes() {
 	//visit := e.Group("visit", middleware)
-	api := e.Group("api")
-	api.GET("/ping", ping)
+	e.GET("ping", ping)
+	user_api := e.Group("user")
+	user_api.POST("/register", controller.Users_Register)
+	user_api.POST("/login", controller.Users_Login)
+	user_api.POST("/logout", controller.Users_Logout)
+	user_api.GET("/account/get/all", controller.Users_GetAll)
+	user_api.GET("/account/get/secq", controller.Users_GetSecA)
+	user_api.GET("/account/password/pwd", controller.Users_AmendPwd_Pwd)
+	user_api.GET("/account/[asswprd/sec", controller.Users_AmendPwd_Sec)
 }
