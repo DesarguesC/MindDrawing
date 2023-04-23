@@ -31,6 +31,16 @@ func QueryNE(n_e string, name_mode bool) (*model.MD_User, error) {
 
 // UPDATE
 // 用status记录登录的name，这里直接传入status
+func UpdateUser_Pwd(status string, new_pwd string) (*model.MD_User, error) {
+	var err error
+	var tmp model.MD_User
+	err = model.DB.Model(&tmp).Where("Name = ?", status).Update("Pwd", new_pwd).Error
+	if err != nil {
+		return nil, err
+	}
+	return &tmp, nil
+}
+
 func UpdateUser_Text(status string, text_path string) (*model.MD_User, error) {
 	var err error
 	var hist model.History_Create
