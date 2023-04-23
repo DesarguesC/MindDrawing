@@ -21,5 +21,5 @@ func AddRoutes() {
 	user_api.GET("/account/get/all", controller.Users_GetAll)
 	user_api.GET("/account/get/secq", controller.Users_GetSecA)
 	user_api.GET("/account/password/pwd", controller.Users_AmendPwd_Pwd)
-	user_api.GET("/account/[asswprd/sec", controller.Users_AmendPwd_Sec)
+	user_api.GET("/account/passwprd/sec", controller.Users_AmendPwd_Sec)
 }

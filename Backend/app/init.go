@@ -16,5 +16,6 @@ func InitWebFramework() {
 	logrus.Info("echo framework initialized")
 }
 func StartServer() {
+	// Backend: localhost: 3000
 	e.Logger.Fatal(e.Start(":3000"))
 }
