@@ -19,11 +19,11 @@ func Init() {
 
 func connectDatabase() {
 	viper.SetConfigName("conf")
-	//viper.SetConfigType("json")	yaml also be fine
+	viper.SetConfigType("yaml") // yaml also be fine
 	viper.AddConfigPath("./")
 	// 数据库用户登录的配置文件直接放在short-link-backend文件夹内
 	if err := viper.ReadInConfig(); err != nil {
-		logrus.Panic(err)
+		logrus.Panic("here")
 	}
 
 	loginInfo := viper.GetStringMapString("sql")
