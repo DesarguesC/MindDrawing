@@ -4,12 +4,6 @@ import (
 	"time"
 )
 
-type History_Create struct {
-	User_Id   int  `gorm:"type:uint" form:"user_id" json:"user_id"`
-	Text_path Strs `gorm:"type:longtext" form:"user_text_path" json:"user_text_path,omitempty"`
-	Img_path  Strs `gorm:"type:longtext" form:"user_img_path" json:"user_img_path,omitempty"`
-}
-
 // 历史数据保存在文件中
 
 type MD_User struct {
