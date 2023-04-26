@@ -13,8 +13,9 @@ func ping(c echo.Context) error {
 
 func AddRoutes() {
 	//visit := e.Group("visit", middleware)
-	e.GET("ping", ping)
+	e.GET("/ping", ping)
 	user_api := e.Group("user")
+
 	user_api.POST("/register", controller.Users_Register)
 	user_api.POST("/login", controller.Users_Login)
 	user_api.POST("/logout", controller.Users_Logout)

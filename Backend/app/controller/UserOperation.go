@@ -6,29 +6,31 @@ import (
 	"Backend/databases"
 	"Backend/model"
 	"Backend/model/dto"
+	"fmt"
 	"github.com/labstack/echo/v4"
 	"github.com/sirupsen/logrus"
 	"time"
 )
 
-var status string
+var Status string
 
 // 从前端bind数据到user.dto结构，调用该部分的crud
 func Users_Judge(c echo.Context) error {
-	if status == "nil" {
+	if Status == "nil" {
 		return response.SendResponse(c, -999, "请先登录")
 	}
 	return response.SendResponse(c, -900, "登录状态正常")
 }
 
 func Users_Register(c echo.Context) error {
-	if status != "nil" {
-		return Users_Judge(c)
-	}
+	//if Status != "nil" {
+	//	return Users_Judge(c)
+	//}
 	data := new(dto.RegisterInput)
 	if err := c.Bind(data); err != nil {
 		return response.SendResponse(c, 400, "Bind Fained")
 	}
+	fmt.Println(*data)
 	if (*data).Name == "" {
 		return response.SendResponse(c, -200, "用户名字段不能为空")
 	}
@@ -84,7 +86,7 @@ func Users_Register(c echo.Context) error {
 }
 
 func Users_Login(c echo.Context) error {
-	if status != "nil" {
+	if Status != "nil" {
 		return response.SendResponse(c, -333, "请勿重复登录")
 	}
 	data1 := new(validation.LoginValid_E)
@@ -113,24 +115,24 @@ func Users_Login(c echo.Context) error {
 		return response.SendResponse(c, -300, "密码错误")
 	} else {
 		if err1 != nil {
-			status = tmp_1.Name
+			Status = tmp_1.Name
 		} else {
-			status = tmp_2.Name
+			Status = tmp_2.Name
 		}
 		return response.SendResponse(c, 001, "欢迎使用")
 	}
 }
 
 func Users_Logout(c echo.Context) error {
-	status = "nil"
+	Status = "nil"
 	return response.SendResponse(c, 004, "您已退出账户")
 }
 
 func Users_GetAll(c echo.Context) error {
-	if status == "nil" {
+	if Status == "nil" {
 		return response.SendResponse(c, -999, "请先登录")
 	}
-	tmp, err := databases.QueryNE(status, true)
+	tmp, err := databases.QueryNE(Status, true)
 	if err != nil {
 		logrus.Fatal("Unkown Error")
 	}
@@ -138,10 +140,10 @@ func Users_GetAll(c echo.Context) error {
 }
 
 func Users_GetSecA(c echo.Context) error {
-	if status == "nil" {
+	if Status == "nil" {
 		return response.SendResponse(c, -999, "请先登录")
 	}
-	tmp, err := databases.QueryNE(status, true)
+	tmp, err := databases.QueryNE(Status, true)
 	if err != nil {
 		logrus.Fatal("Unkown Error")
 	}
@@ -170,11 +172,11 @@ func Users_AmendPwd_Pwd(c echo.Context) error {
 		return response.SendResponse(c, -105, "原始密码错误")
 	} else {
 		if err_n != nil {
-			status = tmp_n.Name
-			databases.UpdateUser_Pwd(status, data.Pwd_new)
+			Status = tmp_n.Name
+			databases.UpdateUser_Pwd(Status, data.Pwd_new)
 		} else {
-			status = tmp_e.Name
-			databases.UpdateUser_Pwd(status, data.Pwd_new)
+			Status = tmp_e.Name
+			databases.UpdateUser_Pwd(Status, data.Pwd_new)
 		}
 		return response.SendResponse(c, 002, "通过输入原始密码成功修改密码")
 	}
@@ -203,11 +205,11 @@ func Users_AmendPwd_Sec(c echo.Context) error {
 		return response.SendResponse(c, -106, "密保问题错误", data.SecA)
 	} else {
 		if err_n != nil {
-			status = tmp_n.Name
-			databases.UpdateUser_Pwd(status, data.Pwd_new)
+			Status = tmp_n.Name
+			databases.UpdateUser_Pwd(Status, data.Pwd_new)
 		} else {
-			status = tmp_e.Name
-			databases.UpdateUser_Pwd(status, data.Pwd_new)
+			Status = tmp_e.Name
+			databases.UpdateUser_Pwd(Status, data.Pwd_new)
 		}
 		return response.SendResponse(c, 003, "通过密保问题成功修改密码")
 	}
