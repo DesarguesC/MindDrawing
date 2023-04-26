@@ -18,9 +18,9 @@ func AddRoutes() {
 
 	user_api.POST("/register", controller.Users_Register)
 	user_api.POST("/login", controller.Users_Login)
-	user_api.POST("/logout", controller.Users_Logout)
+	user_api.GET("/logout", controller.Users_Logout)
 	user_api.GET("/account/get/all", controller.Users_GetAll)
 	user_api.GET("/account/get/secq", controller.Users_GetSecA)
-	user_api.GET("/account/password/pwd", controller.Users_AmendPwd_Pwd)
-	user_api.GET("/account/passwprd/sec", controller.Users_AmendPwd_Sec)
+	user_api.POST("/account/password/pwd", controller.Users_AmendPwd_Pwd)
+	user_api.POST("/account/passwprd/sec", controller.Users_AmendPwd_Sec)
 }

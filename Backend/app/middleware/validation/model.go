@@ -13,7 +13,7 @@ type RegisterNameValid struct {
 	Name string `form:"name" json:"name" query:"name" validate:"excludesall=!@#$%^&*()_-{}"`
 }
 type RegisterEmailValid struct {
-	Email string `form:"email" json:"email" query:"email" validate:"contains=@[.]*.com"`
+	Email string `form:"email" json:"email" query:"email" validate:"required"`
 }
 
 type LoginValid_E struct {

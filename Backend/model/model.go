@@ -18,6 +18,7 @@ type MD_User struct {
 	SecA      string         `gorm:"type:varchar(100)" form:"seca" json:"seca"`
 	His_Cre   History_Create `gorm:"type:varchar(500)" form:"history" json:"history"`
 	LastLogin time.Time      `gorm:"type:datetime" form:"expire_time" json:"expire_time"`
+	// Regist Time
 }
 
 /*
