@@ -14,10 +14,9 @@ func ping(c echo.Context) error {
 func AddRoutes() {
 	//visit := e.Group("visit", middleware)
 	e.GET("/ping", ping)
-
 	AddUserRoutes()
 	AddPicRoutes()
-
+	AddEditorRoutes()
 }
 
 func AddUserRoutes() {
