@@ -22,3 +22,20 @@ go get -u gorm.io/driver/sqlite
 
 use 'ASSETS' folder to save images
 
+
+## How to generate stories?
+
+As is known to all, a story contains the following factors at least: characters, 
+background, subjects, plots, conflicts, highlight, ending.
+So, our language model is to generate based on the all these factors. 
+Among all these factors to be chosen, some should gain from our users.
+
+**Characters**: you should input their infos: Names, Ages, Jobs, ect.
+
+**Backgrounds**: you should describe some basic scenes for the entire story.
+
+**Conflicts**: you can define the most important conflicts between Characters.
+
+**Subjects**: you can define a subjects that the story is to reflect.
+
+**Endings**: Happy ending or Sad ending?
