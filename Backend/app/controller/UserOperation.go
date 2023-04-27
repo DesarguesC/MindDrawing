@@ -186,16 +186,20 @@ func Users_AmendPwd_Pwd(c echo.Context) error {
 		return response.SendResponse(c, -104, "用户不存在")
 	}
 
-	if err_n != nil && tmp_n.Pwd != data_n.Pwd_ori || err_e != nil && tmp_e.Pwd != data_e.Pwd_ori {
+	if err_n == nil && tmp_n.Pwd != data_n.Pwd_ori || err_e == nil && tmp_e.Pwd != data_e.Pwd_ori {
 		return response.SendResponse(c, -105, "原始密码错误")
 	} else {
 		// 		新密码应当与原始密码不相同
-		if err_n != nil {
-			Status = tmp_n.Name
-			databases.UpdateUser_Pwd(Status, data.Pwd_new)
+		if err_n == nil {
+			if tmp_n.Pwd == data_n.Pwd_new {
+				return response.SendResponse(c, -107, "新密码不得与原密码相同")
+			}
+			databases.UpdateUser_Pwd(tmp_n.Name, data.Pwd_new)
 		} else {
-			Status = tmp_e.Name
-			databases.UpdateUser_Pwd(Status, data.Pwd_new)
+			if tmp_e.Pwd == data_e.Pwd_new {
+				return response.SendResponse(c, -107, "新密码不得与原密码相同")
+			}
+			databases.UpdateUser_Pwd(tmp_e.Name, data.Pwd_new)
 		}
 		return response.SendResponse(c, 002, "通过输入原始密码成功修改密码")
 	}
@@ -208,7 +212,13 @@ func Users_AmendPwd_Sec(c echo.Context) error {
 		return response.SendResponse(c, 400, "Bind Failed")
 	}
 	data_n := new(validation.SecPwdValid_N)
+	(*data_n).SecA = (*data).SecA
+	(*data_n).Pwd_new = (*data).Pwd_new
+	(*data_n).Name = (*data).N_E
 	data_e := new(validation.SecPwdValid_E)
+	(*data_e).SecA = (*data).SecA
+	(*data_e).Pwd_new = (*data).Pwd_new
+	(*data_e).Email = (*data).N_E
 
 	tmp := validation.CustomValidator{}
 	if err := tmp.Validate(data_n); !isEmail(data.N_E) && err != nil {
@@ -222,16 +232,26 @@ func Users_AmendPwd_Sec(c echo.Context) error {
 		return response.SendResponse(c, -104, "用户不存在")
 	}
 
-	if err_n != nil && tmp_n.SecA != data_n.SecA || err_e != nil && tmp_e.SecA != data_e.SecA {
+	if err_n == nil && (*tmp_n).SecA != (*data_n).SecA || err_e == nil && (*tmp_e).SecA != (*data_e).SecA {
+		if err_n == nil {
+			fmt.Println((*tmp_n).SecA, data_n.SecA)
+		} else {
+			fmt.Println((*tmp_e).SecA, data_e.SecA)
+		}
 		return response.SendResponse(c, -106, "密保问题错误", data.SecA)
 	} else {
 		// 		新密码应当与原始密码不相同
-		if err_n != nil {
-			Status = tmp_n.Name
-			databases.UpdateUser_Pwd(Status, data.Pwd_new)
+
+		if err_n == nil {
+			if (*tmp_n).Pwd == (*data_n).Pwd_new {
+				return response.SendResponse(c, -107, "新密码不得与原密码相同")
+			}
+			databases.UpdateUser_Pwd((*tmp_n).Name, (*data).Pwd_new)
 		} else {
-			Status = tmp_e.Name
-			databases.UpdateUser_Pwd(Status, data.Pwd_new)
+			if tmp_e.Pwd == data_e.Pwd_new {
+				return response.SendResponse(c, -107, "新密码不得与原密码相同")
+			}
+			databases.UpdateUser_Pwd(tmp_e.Name, data.Pwd_new)
 		}
 		return response.SendResponse(c, 003, "通过密保问题成功修改密码")
 	}

@@ -33,34 +33,34 @@ func QueryNE(n_e string, name_mode bool) (*model.MD_User, error) {
 // 用status记录登录的name，这里直接传入status
 func UpdateUser_Pwd(status string, new_pwd string) (*model.MD_User, error) {
 	var err error
-	var tmp model.MD_User
+	tmp := new(model.MD_User)
 	err = model.DB.Model(&tmp).Where("Name = ?", status).Update("Pwd", new_pwd).Error
 	if err != nil {
 		return nil, err
 	}
-	return &tmp, nil
+	return tmp, nil
 }
 
 func UpdateUser_Text(status string, text_path string) (*model.MD_User, error) {
 	var err error
-	var hist model.History_Create
-	var tmp model.MD_User
+	hist := new(model.History_Create)
+	tmp := new(model.MD_User)
 	fmt.Println(text_path)
 	err = model.DB.Debug().Where("Name = ?", status).First(&tmp).Error
 	if err != nil {
 		return nil, err
 	}
-	hist = tmp.His_Cre
-	hist_, err := UpdateTextPath(text_path, &hist)
+	hist = &(*tmp).His_Cre
+	hist_, err := UpdateTextPath(text_path, hist)
 	err = model.DB.Model(&tmp).Update("His_Cre", hist_).Error
 	// DB.Model(&tmp)  ->  select
-	return &tmp, err
+	return tmp, err
 }
 
 func UpdateUser_Image(status string, image_path string) (*model.MD_User, error) {
 	var err error
 	var hist model.History_Create
-	var tmp model.MD_User
+	tmp := new(model.MD_User)
 	fmt.Println(image_path)
 	err = model.DB.Debug().Where("Name = ?", status).First(&tmp).Error
 	if err != nil {
@@ -69,7 +69,7 @@ func UpdateUser_Image(status string, image_path string) (*model.MD_User, error) 
 	hist = tmp.His_Cre
 	hist_, err := UpdateImagePath(image_path, &hist)
 	err = model.DB.Model(&tmp).Update("His_Cre", hist_).Error
-	return &tmp, err
+	return tmp, err
 }
 
 // DELLETE
