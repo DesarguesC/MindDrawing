@@ -143,14 +143,3 @@ func WriteImage(img image.Image, status string, story_num int, image_num int, st
 	}
 	return img_path, user_path, err
 }
-
-func S(x int64) string {
-
-	if x < 8 {
-		return strconv.Itoa(int(x)) + "byte"
-	} else if x < 8*1024 {
-		return strconv.Itoa(int(x)/8) + "B"
-	} else {
-		return strconv.Itoa(int(x)/(8*1024)) + "KB"
-	}
-}
