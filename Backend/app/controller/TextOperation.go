@@ -87,7 +87,7 @@ func TextLabel_Upload(c echo.Context) error {
 	return response.SendResponse(c, 666, "成功获得标签", text)
 }
 
-func Get_GenTexts(c echo.Context) error {
+func GenTexts(c echo.Context) error {
 	if Status == "nil" {
 		return response.SendResponse(c, -999, "请先登录")
 	}
@@ -95,7 +95,7 @@ func Get_GenTexts(c echo.Context) error {
 
 }
 
-func Editor_TextGuidance(c echo.Context) error {
+func TextGuidanceEdit(c echo.Context) error {
 	if Status == "nil" {
 		return response.SendResponse(c, -999, "请先登录")
 	}

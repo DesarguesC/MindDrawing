@@ -22,14 +22,21 @@ func S(x int64) string {
 	}
 }
 
-func File2Image(header *multipart.FileHeader) (image image.Image, err error) {
+func File2Image(header *multipart.FileHeader) (image.Image, string, error) {
+	var (
+		image image.Image
+		form  string
+	)
+	form = ""
 	file, err := header.Open()
 	ext := strings.ToLower(path.Ext(header.Filename))
 	switch ext {
 	case "jpeg", "jpg":
 		image, err = jpeg.Decode(bufio.NewReader(file))
+		form = "jpeg"
 	case "png":
 		image, err = png.Decode(bufio.NewReader(file))
+		form = "png"
 	}
-	return image, err
+	return image, form, err
 }
