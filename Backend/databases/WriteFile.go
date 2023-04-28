@@ -3,6 +3,7 @@ package databases
 import (
 	"bufio"
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"image"
 	"image/jpeg"
 	"image/png"
@@ -17,13 +18,15 @@ func WriteTexts_into_tmp(texts []string, status string) (string, error) {
 	// TMP文件夹中某个用户的tmp
 	am := len(texts)
 	for i := 1; i <= am; i++ {
-		file_path := "Backend/ASSETS/%%TMP%%/status/text-" + strconv.Itoa(am) + ".txt"
+		file_path := "Backend/ASSETS/%%TMP%%/" + status + "/text-" + strconv.Itoa(am) + ".txt"
 		err := os.MkdirAll(file_path, 0777)
 		if err != nil {
+			logrus.Panic(err)
 			return file_path, err
 		}
 		file, err := os.OpenFile(file_path, os.O_WRONLY|os.O_CREATE, 0666)
 		if err != nil {
+			logrus.Panic(err)
 			return file_path, err
 		}
 		defer file.Close()
@@ -34,10 +37,30 @@ func WriteTexts_into_tmp(texts []string, status string) (string, error) {
 	return "", nil
 }
 
-// 将单张图片写入临时文件，这里只处理上传的图片（只有单张图片的接口）
+// 将单张图片写入临时文件，这里只处理上传的图片（上传只有单张图片的接口，所以这里只写入一张）
 // 生成对多张图片直接通过WriteImage写入用户文件夹而不是tmp文件夹
-func WriteImage_into_tmp(image image.Image, format string) (string, error) {
+func WriteImage_into_tmp(image image.Image, status string, usage string, format string) (string, error) {
+	// usage = {"sketch", "style"}
+	img_path := "Backend/ASSETS/%%TMP%%/" + status + "/image-" + usage + "." + format
+	err := os.MkdirAll(img_path, 0777)
+	if err != nil {
+		logrus.Panic(err)
+		return img_path, err
+	}
+	file, err := os.Create(img_path)
+	if err != nil {
+		logrus.Panic(err)
+		return img_path, err
+	}
+	defer file.Close()
 
+	if format == ".png" {
+		err = png.Encode(file, nil)
+	} else {
+		err = jpeg.Encode(file, image, &jpeg.Options{100})
+	}
+	// 尽量使用jpeg格式
+	return img_path, nil
 }
 
 func DeleteAll_TMP(status string) error {

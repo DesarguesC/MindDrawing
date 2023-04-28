@@ -3,7 +3,7 @@ package controller
 import "github.com/labstack/echo/v4"
 
 func Text_Input_Upload(c echo.Context) error {
-
+	
 }
 
 func TextFile_Upload(c echo.Context) error {
