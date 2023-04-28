@@ -13,28 +13,26 @@ import (
 
 var base_folder string
 
-// 将文段写入临时文件
-func WriteTexts_into_tmp(texts []string, status string) (string, error) {
+// 将输入文段写入临时文件
+func WriteText_into_tmp(text string, status string) (string, error) {
 	// TMP文件夹中某个用户的tmp
-	am := len(texts)
-	for i := 1; i <= am; i++ {
-		file_path := "Backend/ASSETS/%%TMP%%/" + status + "/text-" + strconv.Itoa(am) + ".txt"
-		err := os.MkdirAll(file_path, 0777)
-		if err != nil {
-			logrus.Panic(err)
-			return file_path, err
-		}
-		file, err := os.OpenFile(file_path, os.O_WRONLY|os.O_CREATE, 0666)
-		if err != nil {
-			logrus.Panic(err)
-			return file_path, err
-		}
-		defer file.Close()
-		writer := bufio.NewWriter(file)
-		writer.WriteString(texts[i])
-		writer.Flush()
+	file_path := "Backend/ASSETS/%%TMP%%/" + status + "/InText.txt"
+	err := os.MkdirAll(file_path, 0777)
+	if err != nil {
+		logrus.Panic(err)
+		return file_path, err
 	}
-	return "", nil
+	file, err := os.OpenFile(file_path, os.O_WRONLY|os.O_CREATE, 0666)
+	if err != nil {
+		logrus.Panic(err)
+		return file_path, err
+	}
+	defer file.Close()
+	writer := bufio.NewWriter(file)
+	writer.WriteString(text)
+	writer.Flush()
+
+	return "", err
 }
 
 // 将单张图片写入临时文件，这里只处理上传的图片（上传只有单张图片的接口，所以这里只写入一张）
@@ -144,4 +142,15 @@ func WriteImage(img image.Image, status string, story_num int, image_num int, st
 		err = jpeg.Encode(file, img, &jpeg.Options{100})
 	}
 	return img_path, user_path, err
+}
+
+func S(x int64) string {
+
+	if x < 8 {
+		return strconv.Itoa(int(x)) + "byte"
+	} else if x < 8*1024 {
+		return strconv.Itoa(int(x)/8) + "B"
+	} else {
+		return strconv.Itoa(int(x)/(8*1024)) + "KB"
+	}
 }

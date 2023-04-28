@@ -2,6 +2,7 @@ package config
 
 import (
 	"Backend/model"
+	"errors"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"strconv"
@@ -24,4 +25,17 @@ func Get_labels() (model.Strs, int, error) {
 		(*labels) = append((*labels), Label["choice_"+strconv.Itoa(i)])
 	}
 	return *labels, LENGTH, nil
+}
+
+func Get_Contex(x []int) (model.Strs, error) {
+	str, length, _ := Get_labels()
+	re := model.Strs{}
+	am := len(x)
+	if am+1 < length {
+		return re, errors.New("Length not Matched Error")
+	}
+	for i := 0; i < am; i++ {
+		re = append(re, str[x[i]])
+	}
+	return re, nil
 }
