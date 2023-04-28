@@ -9,15 +9,16 @@ func StyleImage_Upload(c echo.Context) error {
 	if Status == "nil" {
 		return response.SendResponse(c, -999, "请先登录")
 	}
+
 }
 
-func Get_GenImages(c echo.Context) error {
+func SketchImage_Upload(c echo.Context) error {
 	if Status == "nil" {
 		return response.SendResponse(c, -999, "请先登录")
 	}
 }
 
-func SketchImage_Upload(c echo.Context) error {
+func Get_GenImages(c echo.Context) error {
 	if Status == "nil" {
 		return response.SendResponse(c, -999, "请先登录")
 	}
