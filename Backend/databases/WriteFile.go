@@ -37,7 +37,7 @@ func WriteTexts_into_tmp(texts []string, status string) (string, error) {
 // 将单张图片写入临时文件，这里只处理上传的图片（只有单张图片的接口）
 // 生成对多张图片直接通过WriteImage写入用户文件夹而不是tmp文件夹
 func WriteImage_into_tmp(image image.Image, format string) (string, error) {
-	
+
 }
 
 func DeleteAll_TMP(status string) error {
