@@ -1,22 +1,23 @@
 package dto
 
 import (
-	"Backend/model"
 	"mime/multipart"
 )
 
 type bools []bool
+type ints []int
 
 type TextInput struct {
 	Text string `gorm:"varchar(600)" form:"text" json:"text"`
 }
 
 type TextLabelInput struct {
-	LabelList model.Strs `gorm:"longtext" form:"label_list" json:"label_list"`
+	LabelList ints `gorm:"longtext" form:"label_list" json:"label_list"`
+	// index list
 }
 
 type TextFileUpload struct {
-	TextFile multipart.File `gorm:"-"`
+	TextFile *multipart.File `gorm:"-" form:"text_input" json:"text_input"`
 }
 
 type TextLabelSelect struct {

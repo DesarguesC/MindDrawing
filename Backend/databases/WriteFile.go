@@ -2,6 +2,7 @@ package databases
 
 import (
 	"bufio"
+	"fmt"
 	"image"
 	"image/jpeg"
 	"image/png"
@@ -10,6 +11,42 @@ import (
 )
 
 var base_folder string
+
+// 将文段写入临时文件
+func WriteTexts_into_tmp(texts []string, status string) (string, error) {
+	// TMP文件夹中某个用户的tmp
+	am := len(texts)
+	for i := 1; i <= am; i++ {
+		file_path := "Backend/ASSETS/%%TMP%%/status/text-" + strconv.Itoa(am) + ".txt"
+		err := os.MkdirAll(file_path, 0777)
+		if err != nil {
+			return file_path, err
+		}
+		file, err := os.OpenFile(file_path, os.O_WRONLY|os.O_CREATE, 0666)
+		if err != nil {
+			return file_path, err
+		}
+		defer file.Close()
+		writer := bufio.NewWriter(file)
+		writer.WriteString(texts[i])
+		writer.Flush()
+	}
+	return "", nil
+}
+
+// 将单张图片写入临时文件，这里只处理上传的图片（只有单张图片的接口）
+// 生成对多张图片直接通过WriteImage写入用户文件夹而不是tmp文件夹
+func WriteImage_into_tmp(image image.Image, format string) (string, error) {
+	
+}
+
+func DeleteAll_TMP(status string) error {
+	base_folder = "Backend/ASSET/%%TMP%%/status/"
+	err := os.RemoveAll(base_folder)
+	fmt.Println(err)
+	// 每次生成结束后tmp下用户文件夹会被清空
+	return err
+}
 
 // 将文本写入对应用户的文件夹
 func WriteText(text string, status string, story_num int, para_num int, story_name string) (string, string, error) {
