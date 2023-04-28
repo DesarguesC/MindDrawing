@@ -95,7 +95,7 @@ func GenTexts(c echo.Context) error {
 
 }
 
-func TextGuidanceEdit(c echo.Context) error {
+func TextGuidanceEditor(c echo.Context) error {
 	if Status == "nil" {
 		return response.SendResponse(c, -999, "请先登录")
 	}

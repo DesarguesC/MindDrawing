@@ -67,10 +67,12 @@ func GenImages(c echo.Context) error {
 	if Status == "nil" {
 		return response.SendResponse(c, -999, "请先登录")
 	}
+
 }
 
 func EditImage(c echo.Context) error {
 	if Status == "nil" {
 		return response.SendResponse(c, -999, "请先登录")
 	}
+
 }

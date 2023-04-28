@@ -43,8 +43,8 @@ func AddPicRoutes() {
 	gen_api.GET("/text/get_label", controller.TextLabel_Upload)
 
 	gen_api.POST("/image/style_img/upload", controller.StyleImage_Upload)
-	gen_api.GET("/get/gen_images", controller.Get_GenImages)
-	gen_api.GET("/get/gen_texts", controller.Get_GenTexts)
+	gen_api.GET("/get/gen_images", controller.GenImages)
+	gen_api.GET("/get/gen_texts", controller.GenTexts)
 
 }
 
@@ -52,7 +52,7 @@ func AddEditorRoutes() {
 	editor_api := e.Group("editor")
 
 	editor_api.POST("/image/sketch_img/upload", controller.SketchImage_Upload)
-	editor_api.POST("/text/text_input", controller.Editor_TextGuidance)
+	editor_api.POST("/text/text_input", controller.TextGuidanceEditor)
 	editor_api.GET("/edit", controller.EditImage)
 
 }
