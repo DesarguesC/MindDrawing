@@ -48,7 +48,7 @@ func Pic_Get_ImageList(c echo.Context) error {
 		}
 	}
 	return response.SendResponse(c, -555, "当前用户不存在标题为\""+data.Title+"\"的绘本故事", Status, data.Title)
-	
+
 }
 
 func Pic_Get_TextList(c echo.Context) error {

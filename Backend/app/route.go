@@ -17,6 +17,7 @@ func AddRoutes() {
 	AddUserRoutes()
 	AddPicRoutes()
 	AddEditorRoutes()
+	AddGainRoutes()
 }
 
 func AddUserRoutes() {
@@ -55,4 +56,11 @@ func AddEditorRoutes() {
 	editor_api.POST("/text/text_input", controller.TextGuidanceEditor)
 	editor_api.GET("/edit", controller.EditImage)
 
+}
+
+func AddGainRoutes() {
+	gain_api := e.Group("picbook")
+
+	gain_api.GET("/get/gen_images", controller.GenImages_tmp)
+	// tmp
 }

@@ -4,7 +4,10 @@ import (
 	"Backend/app/response"
 	"Backend/databases"
 	"Backend/model/dto"
+	"bufio"
 	"github.com/labstack/echo/v4"
+	"github.com/sirupsen/logrus"
+	"os"
 )
 
 func StyleImage_Upload(c echo.Context) error {
@@ -63,16 +66,55 @@ func SketchImage_Upload(c echo.Context) error {
 	return response.SendResponse(c, 303, "sketch accepted")
 }
 
+func GenImages_tmp(c echo.Context) error {
+	if Status == "nil" {
+		return response.SendResponse(c, -999, "请先登录")
+	}
+	// write python interface first
+
+	//var user *model.MD_User
+	var err error
+	//user, err = databases.QueryNE(Status, true)
+	//if err != nil {
+	//	logrus.Fatal("user conflict error")
+	//	return err
+	//}
+	text_tmp_path := "Backend/ASSETS/%TMP%%/" + Status + "/InText.txt"
+	reader, err := os.OpenFile(text_tmp_path, os.O_WRONLY|os.O_CREATE, 0666)
+	if err != nil {
+		logrus.Fatal(err)
+		return err
+	}
+	defer reader.Close()
+	scanner := bufio.NewScanner(reader)
+	tmp := ""
+	for scanner.Scan() {
+		tmp += scanner.Text()
+	}
+	path := "~/autodl-tmp/images/"
+	name := "1.jpg"
+	err = Txt2Img(tmp, path, name)
+	if err != nil {
+		logrus.Fatal(err)
+		return err
+	}
+	return err
+}
+
 func GenImages(c echo.Context) error {
 	if Status == "nil" {
 		return response.SendResponse(c, -999, "请先登录")
 	}
+	// write python interface first
 
+	return nil
 }
 
 func EditImage(c echo.Context) error {
 	if Status == "nil" {
 		return response.SendResponse(c, -999, "请先登录")
 	}
+	// write python interface first
 
+	return nil
 }
