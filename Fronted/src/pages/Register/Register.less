@@ -1,0 +1,31 @@
+.register-warp {
+  width: 100%;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .register-container {
+    background: @white-color;
+    height: 700px;
+    width: 1000px;
+    display: flex;
+    .register-left {
+      width: 480px;
+      height: 700px;
+      background-image: url('~@/assets/images/login-bg.svg');
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .register-right {
+      width: 520px;
+      height: 100%;
+      padding: 80px 30px;
+      position: relative;
+    }
+    .ant-row {
+      margin-bottom: 20px;
+    }
+  }
+}
