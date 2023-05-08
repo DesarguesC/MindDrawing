@@ -12,6 +12,7 @@ import {
   Notes
 } from '@icon-park/react';
 import '@icon-park/react/styles/index.css';
+import CreatedImg from '../../assets/images/ironman2.png';
 
 const { TextArea } = Input;
 
@@ -24,6 +25,8 @@ function Content() {
   const [brushColor, setBrushColor] = useState('#000000');
   const [undoStack, setUndoStack] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [imgUrl, setImgUrl] = useState('');
+  const [text, setText] = useState('');
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -98,8 +101,11 @@ function Content() {
     const canvas = canvasRef.current;
     const link = document.createElement('a');
     link.download = 'canvas.png';
-    link.href = canvas.toDataURL();
-    link.click();
+    const imgUrl = canvas.toDataURL();
+    console.log(imgUrl);
+    setImgUrl(imgUrl);
+    // link.href = canvas.toDataURL();
+    // link.click();
   };
 
   const handleBrushSizeChange = event => {
@@ -126,18 +132,23 @@ function Content() {
     setIsModalOpen(false);
   };
 
+  const onTextChange = e => {
+    setText(e.target.value);
+    console.log(text);
+  };
+
   const options = [
-    { label: '卡通', value: 'Apple' },
-    { label: '山', value: 'Pear' },
-    { label: '花', value: 'Orange' },
-    { label: '天空', value: 'Apple' },
-    { label: '科技', value: 'Apple' },
-    { label: '风景', value: 'Apple' },
-    { label: '城市', value: 'Apple' },
-    { label: '建筑', value: 'Apple' },
-    { label: '森林', value: 'Apple' },
-    { label: '星空', value: 'Apple' },
-    { label: '春天', value: 'Apple' }
+    { label: '卡通', value: '1' },
+    { label: '山', value: '2' },
+    { label: '花', value: '3' },
+    { label: '天空', value: '4' },
+    { label: '科技', value: '5' },
+    { label: '风景', value: '6' },
+    { label: '城市', value: '7' },
+    { label: '建筑', value: '8' },
+    { label: '森林', value: '9' },
+    { label: '星空', value: '10' },
+    { label: '春天', value: '11' }
   ];
 
   return (
@@ -273,11 +284,12 @@ function Content() {
             <span>文本:</span>
             <TextArea
               // value={value}
-              // onChange={e => setValue(e.target.value)}
-              rows="8"
-              cols="30"
+              className="text"
+              onChange={e => onTextChange(e)}
+              rows="5"
+              cols="20"
               allowClear
-              style={{ marginTop: '10px' }}
+
               // autoSize={{ minRows: 3, maxRows: 7 }}
             />
           </div>
@@ -291,7 +303,8 @@ function Content() {
         onOk={handleOk}
         onCancel={handleCancel}>
         <img
-          src="https://img1.baidu.com/it/u=413643897,2296924942&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500"
+          // src="https://img1.baidu.com/it/u=413643897,2296924942&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500"
+          src={CreatedImg}
           alt="tp"
           width="100%"
           height="100%"

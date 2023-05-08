@@ -7,7 +7,7 @@ import { dispatchLogin } from '@/store/Actions';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { useDispatch, useSelector } from 'react-redux';
 import { userInfoType, StoreState } from '@/store/StoreState';
-import logo from '@/assets/images/微信图片_20230502091459.jpg';
+import logo from '@/assets/images/logo.jpg';
 import { HandPaintedPlate, History, Me } from '@icon-park/react';
 import { NavLink } from 'react-router-dom';
 

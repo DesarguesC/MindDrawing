@@ -9,7 +9,6 @@ import Header from '@/compoents/Header';
 import { useSelector } from 'react-redux';
 import { userInfoType, StoreState } from '@/store/StoreState';
 import { routesEnum } from '@/routes/config';
-import Canvas from '../compoents/Canvas/index.js';
 import Content from '../compoents/Content';
 import History from '../compoents/History';
 import Personal from '../compoents/Personal';
