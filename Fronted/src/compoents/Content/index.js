@@ -37,32 +37,28 @@ function Content() {
   const [text, setText] = useState('');
   const [largeImgUrl, setLargeImgUrl] = useState('');
   const [largeImgText, setLargeImgText] = useState('');
+  const [canvas, setCanvas] = useState(null);
 
   useEffect(() => {
-    if (canvasRef.current) {
-      const canvas = canvasRef.current;
-      canvas.width = '960';
-      canvas.height = '550';
-    }
+    setCanvas(new fabric.Canvas('c'));
   }, []);
 
   const handleFileChange = event => {
     const file = event.target.files[0];
     const reader = new FileReader();
     reader.onload = event => {
-      const image = new Image();
-      image.onload = () => {
-        const canvas = canvasRef.current;
-        const context = canvas.getContext('2d');
-        context.drawImage(image, 0, 0, canvas.width, canvas.height);
-      };
-      image.src = event.target.result;
+      const data = event.target.result;
+      fabric.Image.fromURL(data, function (img) {
+        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+          scaleX: canvas.width / img.width,
+          scaleY: canvas.height / img.height
+        });
+      });
     };
     reader.readAsDataURL(file);
   };
 
   const handleSourceAdd = event => {
-    const canvas = new fabric.Canvas('c');
     const file = event.target.files[0];
     const reader = new FileReader();
     reader.onload = event => {
@@ -259,6 +255,7 @@ function Content() {
           <input
             type="file"
             onChange={handleFileChange}
+            // onChange={() => {}}
             ref={fileInputRef}
             style={{ display: 'none' }}
           />
@@ -273,12 +270,15 @@ function Content() {
           </Button>
           <input
             type="file"
-            // onChange={handleSourceAdd}
-            onChange={() => {}}
+            onChange={handleSourceAdd}
+            // onChange={() => {}}
             ref={fileInputRef2}
             style={{ display: 'none' }}
           />
-          <Button type="primary" onClick={handleUndo}>
+          <Button
+            type="primary"
+            // onClick={handleUndo}
+            onClick={() => {}}>
             <Back
               theme="outline"
               size="15"
@@ -287,7 +287,10 @@ function Content() {
             />
             撤销
           </Button>
-          <Button type="primary" onClick={handleClear}>
+          <Button
+            type="primary"
+            // onClick={handleClear}
+            onClick={() => {}}>
             <Delete
               theme="outline"
               size="15"
@@ -296,7 +299,10 @@ function Content() {
             />
             清空
           </Button>
-          <Button type="primary" onClick={handleSave}>
+          <Button
+            type="primary"
+            // onClick={handleSave}
+            onClick={() => {}}>
             <Save
               theme="outline"
               size="15"
@@ -321,10 +327,11 @@ function Content() {
         <div className="left">
           <canvas
             id="c"
-            ref={canvasRef}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
+            width="960"
+            height="550"
+            // onMouseDown={handleMouseDown}
+            // onMouseMove={handleMouseMove}
+            // onMouseUp={handleMouseUp}
           />
         </div>
         <div className="right">
