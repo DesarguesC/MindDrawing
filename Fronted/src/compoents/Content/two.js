@@ -273,7 +273,8 @@ function Content() {
           </Button>
           <input
             type="file"
-            onChange={handleSourceAdd}
+            // onChange={handleSourceAdd}
+            onChange={() => {}}
             ref={fileInputRef2}
             style={{ display: 'none' }}
           />
