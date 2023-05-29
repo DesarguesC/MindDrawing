@@ -4,11 +4,11 @@ __pycharm__/
 
 
 
-
 # files
 *.pdf
 *.zip
 *.doxc
+*.docx
 # *.json
 *.log
 *.csv
