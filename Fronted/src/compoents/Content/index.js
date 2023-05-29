@@ -9,29 +9,41 @@ import {
   Delete,
   Optimize,
   Label,
-  Notes
+  Notes,
+  Material
 } from '@icon-park/react';
 import '@icon-park/react/styles/index.css';
 import CreatedImg from '../../assets/images/ironman2.png';
+import spring from '../../assets/images/spring.png';
+import summer from '../../assets/images/summer.jpg';
+import autumn from '../../assets/images/autumn.png';
+import winter from '../../assets/images/winter.jpg';
+import { fabric } from 'fabric';
 
 const { TextArea } = Input;
 
 function Content() {
   const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
+  const fileInputRef2 = useRef(null);
   const [brushSize, setBrushSize] = useState(5);
   const [canvasBackground, setCanvasBackground] = useState('');
   const [isDrawing, setIsDrawing] = useState(false);
   const [brushColor, setBrushColor] = useState('#000000');
   const [undoStack, setUndoStack] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isTextModalOpen, setIsTextModalOpen] = useState(false);
   const [imgUrl, setImgUrl] = useState('');
   const [text, setText] = useState('');
+  const [largeImgUrl, setLargeImgUrl] = useState('');
+  const [largeImgText, setLargeImgText] = useState('');
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    canvas.width = '960';
-    canvas.height = '550';
+    if (canvasRef.current) {
+      const canvas = canvasRef.current;
+      canvas.width = '960';
+      canvas.height = '550';
+    }
   }, []);
 
   const handleFileChange = event => {
@@ -45,6 +57,20 @@ function Content() {
         context.drawImage(image, 0, 0, canvas.width, canvas.height);
       };
       image.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleSourceAdd = event => {
+    const canvas = new fabric.Canvas('c');
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = event => {
+      const data = event.target.result;
+      fabric.Image.fromURL(data, function (img) {
+        const oImg = img.set({ left: 0, top: 0, scaleX: 0.5, scaleY: 0.5 });
+        canvas.add(oImg).setActiveObject(oImg);
+      });
     };
     reader.readAsDataURL(file);
   };
@@ -104,8 +130,8 @@ function Content() {
     const imgUrl = canvas.toDataURL();
     console.log(imgUrl);
     setImgUrl(imgUrl);
-    // link.href = canvas.toDataURL();
-    // link.click();
+    link.href = canvas.toDataURL();
+    link.click();
   };
 
   const handleBrushSizeChange = event => {
@@ -116,6 +142,10 @@ function Content() {
     fileInputRef.current.click();
   };
 
+  const handleSourceChoose = () => {
+    fileInputRef2.current.click();
+  };
+
   const onTagChange = checkedValues => {
     console.log('checked = ', checkedValues);
   };
@@ -124,12 +154,23 @@ function Content() {
     setIsModalOpen(true);
   };
 
+  const showTextModal = () => {
+    setIsTextModalOpen(true);
+    setLargeImgUrl(imageData[0].url);
+    setLargeImgText(imageData[0].context);
+  };
+
   const handleOk = () => {
     setIsModalOpen(false);
   };
 
+  const handleTextOk = () => {
+    setIsTextModalOpen(false);
+  };
+
   const handleCancel = () => {
     setIsModalOpen(false);
+    setIsTextModalOpen(false);
   };
 
   const onTextChange = e => {
@@ -151,18 +192,47 @@ function Content() {
     { label: '春天', value: '11' }
   ];
 
+  const image_description =
+    '处处春光明媚，处处春意盎然。小溪的冰融化了，溪水清澈见底，小鱼在溪水里欢快的玩耍。小草偷偷的从土钻出来，伸展嫩绿的身躯。各色的花争奇斗艳，散在草丛里，像无数的星星眨呀眨。';
+
+  const imageData = [
+    {
+      id: 0,
+      url: spring,
+      context:
+        '处处春光明媚，处处春意盎然。小溪的冰融化了，溪水清澈见底，小鱼在溪水里欢快的玩耍。小草偷偷的从土钻出来，伸展嫩绿的身躯。各色的花争奇斗艳，散在草丛里，像无数的星星眨呀眨'
+    },
+    {
+      id: 1,
+      url: summer,
+      context:
+        '夏天是属于花的季节。各种各样的花儿这儿一朵，那儿一簇，大片大片的开出无限的美丽。红的、黄的、蓝的、粉的、白的..把夏天装扮的五彩缤纷'
+    },
+    {
+      id: 2,
+      url: autumn,
+      context:
+        '秋天撒下丰收的果实，天更蓝了，更纯洁，更明净了。太阳是那样明亮，亮得更加柔和。云是那样无暇，给人一种玲珑剔透的感觉，，心情也变得舒畅起来'
+    },
+    {
+      id: 3,
+      url: winter,
+      context:
+        '下雪的时候，一片片雪花从天上落下来，一会儿，山头白了，房子白了，窗外的一切都白了雪花落在我们的手心上化成了一滴水，洁白无瑕，晶莹剔透'
+    }
+  ];
+
   return (
     <div className="container">
       <div className="top">
         <i className="icon icon-xiajiantou"></i>
         <span id="huabu">
-          {/* <DownOne theme="outline" size="36" fill="#6e41ff" /> */}
           <ArrowDown theme="outline" size="30" fill="#6e41ff" />
           画布
         </span>
         <label type="primary">画笔颜色：</label>
         <input
-          style={{ marginRight: '50px' }}
+          style={{ marginRight: '20px' }}
           type="color"
           value={brushColor}
           onChange={event => setBrushColor(event.target.value)}
@@ -176,75 +246,81 @@ function Content() {
           value={brushSize}
           onChange={handleBrushSizeChange}
         />
-        <Button
-          type="primary"
-          onClick={handleButtonClick}
-          style={{ margin: '15px 30px' }}>
-          <Upload
-            theme="outline"
-            size="15"
-            fill="white"
-            style={{ marginRight: '5px' }}
+        <div className="buttons">
+          <Button type="primary" onClick={handleButtonClick}>
+            <Upload
+              theme="outline"
+              size="15"
+              fill="white"
+              style={{ marginRight: '5px' }}
+            />
+            上传背景图片
+          </Button>
+          <input
+            type="file"
+            onChange={handleFileChange}
+            ref={fileInputRef}
+            style={{ display: 'none' }}
           />
-          上传背景图片
-        </Button>
-        {/* <button onClick={handleButtonClick}>上传图片作为背景</button> */}
-        <input
-          type="file"
-          onChange={handleFileChange}
-          ref={fileInputRef}
-          style={{ display: 'none' }}
-        />
-        <Button
-          type="primary"
-          onClick={handleUndo}
-          style={{ marginRight: '30px' }}>
-          <Back
-            theme="outline"
-            size="15"
-            fill="white"
-            style={{ marginRight: '5px' }}
+          <Button type="primary" onClick={handleSourceChoose}>
+            <Material
+              theme="outline"
+              size="15"
+              fill="white"
+              style={{ marginRight: '5px' }}
+            />
+            选择图片素材
+          </Button>
+          <input
+            type="file"
+            // onChange={handleSourceAdd}
+            onChange={() => {}}
+            ref={fileInputRef2}
+            style={{ display: 'none' }}
           />
-          撤销
-        </Button>
-        <Button
-          type="primary"
-          onClick={handleClear}
-          style={{ marginRight: '30px' }}>
-          <Delete
-            theme="outline"
-            size="15"
-            fill="white"
-            style={{ marginRight: '5px' }}
-          />
-          清空
-        </Button>
-        <Button
-          type="primary"
-          onClick={handleSave}
-          style={{ marginRight: '30px' }}>
-          <Save
-            theme="outline"
-            size="15"
-            fill="white"
-            style={{ marginRight: '5px' }}
-          />
-          保存
-        </Button>
-        <Button type="primary" onClick={showModal}>
-          <Optimize
-            theme="outline"
-            size="15"
-            fill="white"
-            style={{ marginRight: '5px' }}
-          />
-          智慧生成绘图
-        </Button>
+          <Button type="primary" onClick={handleUndo}>
+            <Back
+              theme="outline"
+              size="15"
+              fill="white"
+              style={{ marginRight: '5px' }}
+            />
+            撤销
+          </Button>
+          <Button type="primary" onClick={handleClear}>
+            <Delete
+              theme="outline"
+              size="15"
+              fill="white"
+              style={{ marginRight: '5px' }}
+            />
+            清空
+          </Button>
+          <Button type="primary" onClick={handleSave}>
+            <Save
+              theme="outline"
+              size="15"
+              fill="white"
+              style={{ marginRight: '5px' }}
+            />
+            保存
+          </Button>
+          <Button type="primary" onClick={showModal}>
+            <Optimize
+              theme="outline"
+              size="15"
+              fill="white"
+              style={{ marginRight: '5px' }}
+            />
+            智慧生成绘图
+          </Button>
+        </div>
       </div>
 
       <div className="bottom">
         <div className="left">
           <canvas
+            id="c"
             ref={canvasRef}
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
@@ -278,21 +354,25 @@ function Content() {
             style={{
               position: 'absolute',
               margin: '10px',
-              bottom: '50px'
+              bottom: '80px'
             }}>
             <Notes theme="outline" size="24" fill="#6e41ff" />
             <span>文本:</span>
             <TextArea
-              // value={value}
               className="text"
               onChange={e => onTextChange(e)}
-              rows="5"
-              cols="20"
               allowClear
-
-              // autoSize={{ minRows: 3, maxRows: 7 }}
             />
           </div>
+          <Button className="bb" type="primary" onClick={showTextModal}>
+            <Optimize
+              theme="outline"
+              size="15"
+              fill="white"
+              style={{ marginRight: '5px' }}
+            />
+            <span>智慧生成绘本</span>
+          </Button>
         </div>
       </div>
       <Modal
@@ -302,13 +382,39 @@ function Content() {
         okText="保存"
         onOk={handleOk}
         onCancel={handleCancel}>
-        <img
-          // src="https://img1.baidu.com/it/u=413643897,2296924942&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500"
-          src={CreatedImg}
-          alt="tp"
-          width="100%"
-          height="100%"
-        />
+        <img src={CreatedImg} alt="tp" width="100%" height="100%" />
+      </Modal>
+      <Modal
+        title="生成绘本预览"
+        visible={isTextModalOpen}
+        cancelText="放弃"
+        okText="保存"
+        onOk={handleTextOk}
+        onCancel={handleCancel}>
+        <div id="image-container">
+          <div id="large-image">
+            <img src={largeImgUrl}></img>
+            <div className="img_text">{largeImgText}</div>
+          </div>
+          <div className="small-images">
+            <ul>
+              <li>
+                {imageData.map(item => {
+                  return (
+                    <div
+                      key={item.id}
+                      onClick={() => {
+                        setLargeImgText(imageData[item.id].context);
+                        setLargeImgUrl(imageData[item.id].url);
+                      }}>
+                      <img src={item.url} />
+                    </div>
+                  );
+                })}
+              </li>
+            </ul>
+          </div>
+        </div>
       </Modal>
     </div>
   );

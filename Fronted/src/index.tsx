@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import store,{ persistor } from './store/index';
+import store, { persistor } from './store/index';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import reportWebVitals from '@/reportWebVitals';
 import * as dayjs from 'dayjs';
@@ -10,14 +10,16 @@ import '@/theme/app.less';
 import '@/mock/index';
 import '@/assets/icons';
 import App from './App';
+import ParticlesBg from 'particles-bg';
 dayjs.locale('zh-cn');
 
 ReactDOM.render(
-  <Provider store={ store }>
+  <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-     <App/>
-   </PersistGate>
- </Provider>,
+      <App />
+      <ParticlesBg type="polygon" bg={true} />
+    </PersistGate>
+  </Provider>,
   document.getElementById('root')
 );
 

@@ -12,6 +12,7 @@ import { routesEnum } from '@/routes/config';
 import Content from '../compoents/Content';
 import History from '../compoents/History';
 import Personal from '../compoents/Personal';
+import Gallery from '../compoents/Gallery';
 /**
 /**
  * 获取所有路由页面
@@ -81,6 +82,7 @@ const MainLayout: FC = () => {
       <Switch>
         <Route path="/" exact component={Content} />
         <Route path="/history" component={History} />
+        {/* <Route path="/gallery" component={Gallery} /> */}
         <Route path="/personal" component={Personal} />
         <Route path="/no" component={NoMatch} />
       </Switch>

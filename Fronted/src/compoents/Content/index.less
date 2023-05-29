@@ -4,7 +4,7 @@
   color: @primary-color;
   letter-spacing: 0;
   margin-left: 10px;
-  margin-right: 50px;
+  margin-right: 20px;
 }
 
 .top {
@@ -15,10 +15,19 @@
     letter-spacing: 0;
     // margin-bottom: 10px;
   }
+
+  .buttons {
+    display: inline;
+    Button {
+      margin-right: 16px;
+    }
+  }
 }
 
 .left {
   border: 2px solid @primary-color;
+  width: 960px;
+  height: 550px;
 }
 
 .right {
@@ -29,8 +38,59 @@
     letter-spacing: 0;
     margin-bottom: 5px;
   }
+
+  .text {
+    font-size: 20px;
+    height: 10rem;
+  }
+
+  .bb {
+    position: absolute;
+    margin: 10px;
+    right: 210px;
+    bottom: 40px;
+    span {
+      color: white;
+      font-weight: 400;
+      font-size: 14px;
+    }
+  }
 }
 
-.text {
-  font-size: 20px;
+#image-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  #large-image {
+    img {
+      width: 100%;
+      height: 75%;
+    }
+    .img_text {
+      font-size: 15px;
+      font-weight: 600;
+    }
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  img {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+  }
+
+  #large-image {
+    width: 350px;
+    height: 400px;
+    background-color: #ccc;
+    float: left;
+  }
 }

@@ -61,54 +61,56 @@ const Login: FC = () => {
   };
 
   return (
-    <Layout className="login-warp">
-      <div className="login-container">
-        <div className="login-left"></div>
-        <div className="login-right">
-          <Form
-            name="basic"
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-            initialValues={{ userSetNumber: true }}
-            onFinish={onFinish}
-            autoComplete="off">
-            <Form.Item
-              label="用户名"
-              name="N_E"
-              rules={[{ required: true, message: '请输入用户名!' }]}>
-              <Input placeholder="请输入用户名" size="large" />
-            </Form.Item>
+    <>
+      <Layout className="login-warp">
+        <div className="login-container">
+          <div className="login-left"></div>
+          <div className="login-right">
+            <Form
+              name="basic"
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 16 }}
+              initialValues={{ userSetNumber: true }}
+              onFinish={onFinish}
+              autoComplete="off">
+              <Form.Item
+                label="用户名"
+                name="N_E"
+                rules={[{ required: true, message: '请输入用户名!' }]}>
+                <Input placeholder="请输入用户名" size="large" />
+              </Form.Item>
 
-            <Form.Item
-              label="密码"
-              name="Pwd"
-              rules={[{ required: true, message: '请输入密码!' }]}>
-              <Input.Password placeholder="请输入密码" size="large" />
-            </Form.Item>
+              <Form.Item
+                label="密码"
+                name="Pwd"
+                rules={[{ required: true, message: '请输入密码!' }]}>
+                <Input.Password placeholder="请输入密码" size="large" />
+              </Form.Item>
 
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <a
-                onClick={() => {
-                  history.push('/register');
-                }}>
-                点击跳转到注册页
-              </a>
-            </Form.Item>
+              <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                <a
+                  onClick={() => {
+                    history.push('/register');
+                  }}>
+                  点击跳转到注册页
+                </a>
+              </Form.Item>
 
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <Button
-                loading={loading}
-                size="large"
-                type="primary"
-                htmlType="submit"
-                style={{ width: '100%' }}>
-                登录
-              </Button>
-            </Form.Item>
-          </Form>
+              <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                <Button
+                  loading={loading}
+                  size="large"
+                  type="primary"
+                  htmlType="submit"
+                  style={{ width: '100%' }}>
+                  登录
+                </Button>
+              </Form.Item>
+            </Form>
+          </div>
         </div>
-      </div>
-    </Layout>
+      </Layout>
+    </>
   );
 };
 

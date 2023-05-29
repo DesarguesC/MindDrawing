@@ -51,6 +51,12 @@ const Header: FC = () => {
             <span>历史画作</span>
           </NavLink>
         </div>
+        {/* <div>
+          <NavLink to="/gallery">
+            <Me theme="outline" size="24" fill="#6e41ff" />
+            <span>我的绘本</span>
+          </NavLink>
+        </div> */}
         <div>
           <NavLink to="/personal">
             <Me theme="outline" size="24" fill="#6e41ff" />
