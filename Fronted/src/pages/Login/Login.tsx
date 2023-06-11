@@ -67,6 +67,7 @@ const Login: FC = () => {
           <div className="login-left"></div>
           <div className="login-right">
             <Form
+              className="login-form"
               name="basic"
               labelCol={{ span: 8 }}
               wrapperCol={{ span: 16 }}

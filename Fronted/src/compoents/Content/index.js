@@ -223,7 +223,7 @@ function Content() {
   ];
 
   return (
-    <div className="container">
+    <div className="content-container">
       <div className="top">
         <i className="icon icon-xiajiantou"></i>
         <span id="huabu">
@@ -349,13 +349,7 @@ function Content() {
             </Checkbox.Group>
           </div>
 
-          <div
-            className="textarea"
-            style={{
-              position: 'absolute',
-              margin: '10px',
-              bottom: '80px'
-            }}>
+          <div className="textarea">
             <Notes theme="outline" size="24" fill="#6e41ff" />
             <span>文本:</span>
             <TextArea
@@ -364,15 +358,17 @@ function Content() {
               allowClear
             />
           </div>
-          <Button className="bb" type="primary" onClick={showTextModal}>
-            <Optimize
-              theme="outline"
-              size="15"
-              fill="white"
-              style={{ marginRight: '5px' }}
-            />
-            <span>智慧生成绘本</span>
-          </Button>
+          <div className="bb">
+            <Button type="primary" onClick={showTextModal}>
+              <Optimize
+                theme="outline"
+                size="15"
+                fill="white"
+                style={{ marginRight: '5px' }}
+              />
+              <span>智慧生成绘本</span>
+            </Button>
+          </div>
         </div>
       </div>
       <Modal

@@ -49,7 +49,7 @@ function History() {
   const currentImages = imageData.slice(startIndex, endIndex);
 
   return (
-    <div className="container">
+    <div className="history-container">
       <Row justify="space-around" align="middle" className="wrapper">
         {currentImages.map(image => (
           <Col span={11} key={image.id}>
@@ -59,17 +59,8 @@ function History() {
         ))}
       </Row>
 
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          position: 'absolute',
-          bottom: 70,
-          left: 0,
-          right: 0
-        }}>
+      <div className="pagination">
         <Pagination
-          // className="page"
           current={currentPage}
           pageSize={pageSize}
           total={imageData.length}

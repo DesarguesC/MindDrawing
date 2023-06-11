@@ -1,19 +1,26 @@
-.page {
-  position: absolute;
+.history-container {
+  padding: 10px;
+  background-color: white;
 }
 
 .wrapper {
+  // border: 1px solid #000;
+  display: flex;
+  justify-content: space-around;
   margin-top: 10px;
   .text {
     height: 130px;
     font-size: 20px;
     color: @primary-color;
     overflow: auto;
-    // border: 1px solid #000;
+  }
+  .pic {
+    width: 600px;
+    height: 400px;
   }
 }
 
-.pic {
-  width: 600px;
-  height: 400px;
+.pagination {
+  display: flex;
+  justify-content: center;
 }
